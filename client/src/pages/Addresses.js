@@ -22,11 +22,8 @@ const Addresses = () => {
         <div className="pppoe-info" key={item._id}>
           <div className="important-info">
             <p>
-              <strong>Name:</strong> {item.name}
-            </p>
-            <p>
               <strong>IP Address: </strong>
-              <a href={`http://${item.ip}`}>{item.ip}</a>
+              <a href={`http://${item.ip}`}>{item.ip}</a> - {item.name}
             </p>
           </div>
           {/* <div className="time-info">

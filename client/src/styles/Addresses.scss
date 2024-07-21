@@ -1,20 +1,26 @@
-.Addresses{
-    text-align: center;
+.Addresses {
+  text-align: center;
 
-    .pppoe-info  {
-        display: flex;
-        justify-content: center;
-      align-items: flex-start;
-        flex-direction: row;
-        gap: 15px;
-    }
+  .pppoe-info {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    flex-direction: row;
+    gap: 15px;
+    background-color: rgb(63, 63, 63);
+    width: 400px;
+    margin: 0 auto !important;
+    // border-radius: 5px;
+    text-align: left;
+  }
 
-    .pppoe-info > .important-info {
-        display: flex;
-        justify-content: left !important;
-      align-items: flex-start;
-      text-align: left;
-        flex-direction: row;
-        gap: 15px;
-    }
+  .pppoe-info > .important-info {
+    padding-top: 10px;
+    display: flex;
+    justify-content: left !important;
+    align-items: flex-start;
+    text-align: left;
+    flex-direction: row;
+    gap: 15px;
+  }
 }

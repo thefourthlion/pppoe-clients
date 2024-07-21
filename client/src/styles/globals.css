@@ -1,3 +1,7 @@
-.Home p {
+body {
+  background-color: #1D2129 !important;
+  color: #C4D0DE !important;
+}
+body p {
   font-size: 20px;
 }/*# sourceMappingURL=globals.css.map */

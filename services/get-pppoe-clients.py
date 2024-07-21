@@ -25,6 +25,8 @@ timestamp = current_time.strftime("%m/%d/%y %H:%M")
 # Make the GET request with basic authentication
 response = requests.get(get_pppoe_clients, auth=HTTPBasicAuth(username, password), verify=False)
 
+index = 0
+
 # Check if the request was successful
 if response.status_code == 200:
     # Parse the JSON response
@@ -35,7 +37,7 @@ if response.status_code == 200:
         name = entry.get('name')
         address = entry.get('address')
         uptime = entry.get('uptime')
-
+        
         # Prepare data to post
         post_data = {
             'name': name,
@@ -45,16 +47,18 @@ if response.status_code == 200:
         }
 
         # Print the data
-        print(f'Name: {name}, Address: {address}, Uptime: {uptime}')
+        print(f'Name: {name}, Address: {address}, Uptime: {uptime}, Timestamp: {timestamp} , Index: {index}')
 
-        # Make the POST request to the database
-        post_response = requests.post(post_url, json=post_data)
+        # # Make the POST request to the database
+        # post_response = requests.post(post_url, json=post_data)
 
-        # Check if the POST request was successful
-        if post_response.status_code == 201:
-            print(f'Successfully posted data for {name}')
-        else:
-            print(f'Failed to post data for {name}: {post_response.status_code} - {post_response.text}')
+        # # Check if the POST request was successful
+        # if post_response.status_code == 201:
+        #     print(f'Successfully posted data for {name}')
+        # else:
+        #     print(f'Failed to post data for {name}: {post_response.status_code} - {post_response.text}')
+        
+        index = index + 1
 else:
     # Print the error code and message
     print(f'Error: {response.status_code} - {response.text}')
