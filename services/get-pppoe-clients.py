@@ -3,15 +3,12 @@ from requests.auth import HTTPBasicAuth
 import json
 from datetime import datetime
 
-
 # Replace these with your actual username and password
 username = 'everett'
 password = 'Pemdas?!0101'
 
 # URL for the API call to get active PPPoE clients
 get_pppoe_clients = 'https://192.168.0.61/rest/ppp/active'
-
-get_identity = 'https://192.168.0.61/rest/system/identity'
 
 # URL for the API call to post data to the database
 post_url = 'http://localhost:4001/api/pppoe/create'
@@ -24,41 +21,67 @@ timestamp = current_time.strftime("%m/%d/%y %H:%M")
 
 # Make the GET request with basic authentication
 response = requests.get(get_pppoe_clients, auth=HTTPBasicAuth(username, password), verify=False)
-
-index = 0
-
+    
 # Check if the request was successful
 if response.status_code == 200:
     # Parse the JSON response
     data = response.json()
 
-    # Loop through each entry, extract required fields, print the data, and post to the database
+    # Collect all clients
+    clients = []
+    
+    # Loop through each entry and extract required fields
     for entry in data:
-        name = entry.get('name')
-        address = entry.get('address')
-        uptime = entry.get('uptime')
-        
-        # Prepare data to post
-        post_data = {
-            'name': name,
-            'ip': address,
-            'uptime': uptime,
-            'timestamp':timestamp
+        client = {
+            'username': entry.get('name'),
+            'ip': entry.get('address'),
+            'uptime': entry.get('uptime')
         }
+        clients.append(client)
 
-        # Print the data
-        print(f'Name: {name}, Address: {address}, Uptime: {uptime}, Timestamp: {timestamp} , Index: {index}')
-
-        # # Make the POST request to the database
-        # post_response = requests.post(post_url, json=post_data)
-
-        # # Check if the POST request was successful
-        # if post_response.status_code == 201:
-        #     print(f'Successfully posted data for {name}')
-        # else:
-        #     print(f'Failed to post data for {name}: {post_response.status_code} - {post_response.text}')
+    # Get MikroTik name
+    get_identity = 'https://192.168.0.61/rest/system/identity'
+    response_identity = requests.get(get_identity, auth=HTTPBasicAuth(username, password), verify=False)
+    if response_identity.status_code == 200:
+        data_identity = response_identity.json()
+        mikrotik_name = data_identity['name']
+    else:
+        mikrotik_name = "Unknown"
         
-        index = index + 1
+    # Prepare data to post
+    post_data = {
+        'label': mikrotik_name,
+        'mikrotikName': mikrotik_name,
+        'clients': clients,
+        'timestamp': timestamp
+    }
+    
+    # Print the data
+    print(f'🔵 {json.dumps(post_data, indent=4)}')
+    
+    # check if db for router already exists
+    check_database_for_identity = f'http://localhost:4001/api/pppoe/read/mikrotikName/{mikrotik_name}'
+    response_database_for_identity = requests.get(check_database_for_identity, auth=HTTPBasicAuth(username, password), verify=False)
+    if response_database_for_identity.status_code == 200:
+        data_database_for_identity = response_database_for_identity.json()
+        mikrotik_name_from_db = data_database_for_identity['mikrotikName']
+        id_from_db = data_database_for_identity['_id']
+        if(mikrotik_name == mikrotik_name_from_db):
+            print(f'🟡 {mikrotik_name_from_db} is already in db')
+            edit_url = f'http://localhost:4001/api/pppoe/update/{id_from_db}'
+            
+            # Make the POST request to edit the database
+            post_response = requests.post(edit_url, json=post_data)
+            print("🟡 Editing DB")
+        else:
+            # Make the POST request to the database
+            post_response = requests.post(post_url, json=post_data)
+            print("🟢 Creating DB")
+        # Check if the POST request was successful
+        if post_response.status_code == 200:
+            print('🟢 Successfully posted data')
+        else:
+            print(f'🔴 Failed to post data: {post_response.status_code} - {post_response.text}')
 else:
     # Print the error code and message
     print(f'Error: {response.status_code} - {response.text}')
