@@ -13,7 +13,7 @@ const Addresses = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4001/api/pppoe/read")
+      .get("http://localhost:5001/api/pppoe/read")
       .then((response) => {
         setData(response.data);
         console.log(response.data);
@@ -24,9 +24,9 @@ const Addresses = () => {
   }, []);
 
   const updateLabel = (id, newLabel) => {
-    console.log(`http://localhost:4001/api/pppoe/update/label/${id}`);
+    console.log(`http://localhost:5001/api/pppoe/update/label/${id}`);
     axios
-      .post(`http://localhost:4001/api/pppoe/update/label/${id}`, {
+      .post(`http://localhost:5001/api/pppoe/update/label/${id}`, {
         label: newLabel,
       })
       .then((response) => {
