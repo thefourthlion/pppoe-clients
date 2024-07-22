@@ -1,0 +1,5 @@
+apps:
+  - script: ./index.js
+    cwd: /home/thefourthlion/pppoe-clients/server/
+    name: "pppoe-clients-server"
+    interpreter: /usr/bin/node

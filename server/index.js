@@ -38,3 +38,4 @@ app.listen(PORT, () => {
   console.log("✅ Listening on port " + PORT);
 });
 app.use("/api/pppoe", require("./routes/pppoe"));
+app.use('/api/pppoe', require('./routes/pppoe'));

@@ -1,12 +1,10 @@
 const pppoe = require("../models/pppoe");
 exports.createpppoe = async (req, res) => {
-  const page = req.query.page || 0;
-  const limit = req.query.limit || 25;
   try {
     let newpppoe = new pppoe({
-      name: req.body.name,
-      ip: req.body.ip,
-      uptime: req.body.uptime,
+      label: req.body.label,
+      mikrotikName: req.body.mikrotikName,
+      clients: req.body.clients,
       timestamp: req.body.timestamp,
     });
     await newpppoe.save();
@@ -16,6 +14,8 @@ exports.createpppoe = async (req, res) => {
   }
 };
 exports.readpppoe = async (req, res) => {
+  const page = req.query.page || 0;
+  const limit = req.query.limit || 25;
   try {
     pppoe
       .find({}, (err, result) => {
@@ -43,15 +43,50 @@ exports.readpppoeFromID = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.readpppoeFromMikrotikName = async (req, res) => {
+    try {
+      await pppoe.findOne({ mikrotikName: req.params.mikrotikName }, {}, (err, result) => {
+        if (err) {
+          res.json({ app: err });
+        }
+        res.send(result);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
 exports.updatepppoe = async (req, res) => {
   try {
     await pppoe.findByIdAndUpdate(
       req.params.id,
       {
-        name: req.body.name,
-        ip: req.body.ip,
-        uptime: req.body.uptime,
+        label: req.body.label,
+        mikrotikName: req.body.mikrotikName,
+        clients: req.body.clients,
         timestamp: req.body.timestamp,
+      },
+      (err, result) => {
+        if (err) {
+          res.json({ app: err });
+        }
+        res.send(result);
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.updatepppoeLabel = async (req, res) => {
+  try {
+    await pppoe.findByIdAndUpdate(
+      req.params.id,
+      {
+        label: req.body.label,
+
       },
       (err, result) => {
         if (err) {
