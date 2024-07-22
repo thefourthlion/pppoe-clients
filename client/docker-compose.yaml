@@ -1,0 +1,19 @@
+services:
+  client:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: pppoe-client
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
+    # Uncomment if you need volumes
+    # volumes:
+    #   - ./client/react:/pppoe-client
+    # networks:
+    #   - docker-network
+
+# networks:
+#   docker-network:
+#     external: true

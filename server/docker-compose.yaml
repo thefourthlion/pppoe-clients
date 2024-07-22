@@ -1,0 +1,15 @@
+version: "25.0.2"
+services:
+  api:
+    build: /
+    container_name: pppoe-clients-server
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./:/pppoe-clients-server
+      - /node_modules
+#     networks:
+#       - docker-network
+# networks:
+#   docker-network:
+#     external: true
