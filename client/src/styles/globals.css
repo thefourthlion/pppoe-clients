@@ -1,7 +1,33 @@
 body {
-  background-color: #1D2129 !important;
-  color: #C4D0DE !important;
+  background-color: #161616 !important;
+  color: #c4d0de !important;
+}
+body .form-label {
+  box-shadow: 9px 9px 4px -6px hsla(0, 0%, 0%, 0.3);
+  width: 275px;
+  margin: 0 auto;
+}
+body .form-input:focus {
+  border-color: black;
+  box-shadow: none;
+  outline: 0 none;
+}
+body textarea {
+  border-radius: 5px;
+  border-color: lightgray;
+  box-shadow: none;
+  outline: 0 none;
+  box-shadow: 9px 9px 4px -6px hsla(0, 0%, 0%, 0.3);
+}
+body textarea:focus {
+  border-color: black;
+}
+body textarea::-moz-placeholder {
+  color: gray;
+}
+body textarea::placeholder {
+  color: gray;
 }
 body p {
-  font-size: 20px;
+  font-size: 17px;
 }/*# sourceMappingURL=globals.css.map */

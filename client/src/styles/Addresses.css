@@ -1,23 +1,26 @@
 .Addresses {
   text-align: center;
 }
+.Addresses h1 {
+  margin-bottom: 15px;
+}
+.Addresses .label {
+  margin-top: 10px;
+}
 .Addresses .pppoe-info {
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: left;
-  flex-direction: row;
-  gap: 15px;
-  background-color: rgb(63, 63, 63);
-  width: 400px;
-  margin: 0 auto !important;
+  flex-direction: column;
+  background-color: #1D1D1C;
+  border-radius: 5px;
+  border: 1px solid black;
+  width: 275px;
+  margin: 0 auto;
+  gap: 1px;
   text-align: left;
 }
 .Addresses .pppoe-info > .important-info {
+  padding-left: 15px;
   padding-top: 10px;
-  display: flex;
-  justify-content: left !important;
-  align-items: flex-start;
-  text-align: left;
-  flex-direction: row;
-  gap: 15px;
 }/*# sourceMappingURL=Addresses.css.map */
