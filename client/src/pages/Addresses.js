@@ -11,17 +11,26 @@ const Addresses = () => {
   const [newLabel, setNewLabel] = useState("");
   const [expanded, setExpanded] = useState({}); // State to keep track of expanded routers
 
-  useEffect(() => {
-    axios
-      .get("http://192.168.0.66:5001/api/pppoe/read")
-      .then((response) => {
-        setData(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the data!", error);
-      });
-  }, []);
+useEffect(() => {
+  axios
+    .get("http://192.168.0.66:5001/api/pppoe/read")
+    .then((response) => {
+      setData(response.data);
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error("There was an error fetching the data!", error);
+      if (error.response) {
+        console.error("Response error:", error.response);
+      } else if (error.request) {
+        console.error("Request error:", error.request);
+      } else {
+        console.error("Error", error.message);
+      }
+      console.error("Error config:", error.config);
+    });
+}, []);
+
 
   const updateLabel = (id, newLabel) => {
     console.log(`http://192.168.0.66:5001/api/pppoe/update/label/${id}`);
@@ -40,6 +49,14 @@ const Addresses = () => {
       })
       .catch((error) => {
         console.error("There was an error updating the data!", error);
+        if (error.response) {
+          console.error("Response error:", error.response);
+        } else if (error.request) {
+          console.error("Request error:", error.request);
+        } else {
+          console.error("Error", error.message);
+        }
+        console.error("Error config:", error.config);
       });
   };
 
