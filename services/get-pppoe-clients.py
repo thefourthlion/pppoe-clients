@@ -12,7 +12,7 @@ password = 'Pemdas?!0101'
 get_pppoe_clients = 'https://192.168.0.61/rest/ppp/active'
 
 # URL for the API call to post data to the database
-post_url = 'http://192.168.0.66:5001/api/pppoe/create'
+post_url = 'https://apiip.portkeylabs.net:5001/api/pppoe/create'
 
 # Get the current time
 current_time = datetime.now()
@@ -62,7 +62,7 @@ if response.status_code == 200:
     
     # Check if db for router already exists
     encoded_mikrotik_name = urllib.parse.quote(mikrotik_name)
-    check_database_for_identity = f'http://192.168.0.66:5001/api/pppoe/read/mikrotikName/{encoded_mikrotik_name}'
+    check_database_for_identity = f'https://apiip.portkeylabs.net:5001/api/pppoe/read/mikrotikName/{encoded_mikrotik_name}'
     print(f'🔵 Checking database for identity: {check_database_for_identity}')
     response_database_for_identity = requests.get(check_database_for_identity, verify=False)
     
@@ -77,7 +77,7 @@ if response.status_code == 200:
             id_from_db = data_database_for_identity['_id']
             if mikrotik_name == mikrotik_name_from_db:
                 print(f'🟡 {mikrotik_name_from_db} is already in db')
-                edit_url = f'http://192.168.0.66:5001/api/pppoe/update/{id_from_db}'
+                edit_url = f'https://apiip.portkeylabs.net:5001/api/pppoe/update/{id_from_db}'
                 
                 # Make the POST request to edit the database
                 post_response = requests.post(edit_url, json=post_data)
