@@ -13,7 +13,7 @@ const Addresses = () => {
 
 useEffect(() => {
   axios
-    .get("https://apiip.portkeylabs.net:5001/api/pppoe/read")
+    .get("https://apiip.portkeylabs.net/api/pppoe/read")
     .then((response) => {
       setData(response.data);
       console.log(response.data);
@@ -33,9 +33,9 @@ useEffect(() => {
 
 
   const updateLabel = (id, newLabel) => {
-    console.log(`https://apiip.portkeylabs.net:5001/api/pppoe/update/label/${id}`);
+    console.log(`https://apiip.portkeylabs.net/api/pppoe/update/label/${id}`);
     axios
-      .post(`https://apiip.portkeylabs.net:5001/api/pppoe/update/label/${id}`, {
+      .post(`https://apiip.portkeylabs.net/api/pppoe/update/label/${id}`, {
         label: newLabel,
       })
       .then((response) => {
